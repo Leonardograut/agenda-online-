@@ -2,17 +2,17 @@
 
 require 'config.php';
 
-$usuario = [];
+$atividades = [];
 
 $id = filter_input(INPUT_GET, 'id');
 
 if ($id) {
-    $sql = $pdo->prepare("SELECT * FROM usuario WHERE id = :id");
+    $sql = $pdo->prepare("SELECT * FROM atividades WHERE id = :id");
     $sql->bindValue(':id', $id);
     $sql->execute();
 
     if ($sql->rowCount() > 0) {
-        $usuario = $sql->fetch(PDO::FETCH_ASSOC);
+        $atividades = $sql->fetch(PDO::FETCH_ASSOC);
     } else {
         header("Location: index.php");
         exit;
@@ -38,17 +38,41 @@ if ($id) {
 <div class="container mt-5">
     <h1 class="text-center mb-4">Editar Usuario</h1>
     <form method="POST" action="editar_action.php">
-        <input type="hidden" name="id" value="<?= $usuario['id']; ?>">
+        <input type="hidden" name="id" value="<?= $atividades['id']; ?>">
 
         <div class="form-group">
             <label for="nome">Nome:</label>
-            <input type="text" class="form-control" id="nome" name="nome" value="<?= $usuario['nome']; ?>" required>
+            <input type="text" class="form-control" id="nome" name="nome" value="<?= $atividades['nome']; ?>" required>
         </div>
 
         <div class="form-group">
-            <label for="descricao">E-mail:</label>
-            <input type="email" class="form-control" id="descricao" name="descricao" value="<?= $usuario['descricao']; ?>" required>
+            <label for="descricao">Descricao:</label>
+            <input type="text" class="form-control" id="descricao" name="descricao" value="<?= $atividades['descricao']; ?>" required>
         </div>
+
+        <div>
+           
+        <div class="form-group">
+          <label for="data_inicio">Data de Início:</label>
+          <input type="date" class="form-control" id="data_inicio" name="data_inicio" value="<?= $atividades['data_inicio']; ?>"required>
+        </div>
+
+        <div class="form-group">
+          <label for="data_termino">Data de Término:</label>
+          <input type="date" class="form-control" id="data_termino" name="data_termino" value="<?= $atividades['data_termino']; ?>" required>
+        </div>
+
+        <div class="form-group">
+          <label for="status">Status:</label>
+          <select class="form-control" id="status" name="status" required>
+            <option value="pendente">Pendente </option>
+            <option value="concluida">Concluída</option>
+            <option value="cancelada">Cancelada</option>
+          </select>
+        </div>
+
+        </div>
+
 
         <button type="submit" class="btn btn-primary btn-block">Atualizar</button>
     </form>

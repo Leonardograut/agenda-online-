@@ -1,10 +1,18 @@
-create database agenda;
+create database banco;
 
-use agenda;
+use banco;
 
+CREATE TABLE users (
+    usuario_id int primary key  AUTO_INCREMENT,
+    login VARCHAR(50) UNIQUE NOT NULL,
+    senha VARCHAR(255) NOT NULL
+);
 
-create table usuario(
- id int primary key auto_increment,
- nome varchar(100)not null,
- descricao varchar(100) not null
-)
+CREATE TABLE atividades (
+    id int auto_increment primary key,
+    nome varchar(100) not null,
+    descricao varchar(100) not  null,
+    data_inicio datetime not null,
+    data_termino datetime not null,
+    status ENUM('pendente', 'concluida', 'cancelada') not null,
+);
